@@ -1,0 +1,173 @@
+\section{Resultados}
+\label{sec:resultados}
+
+La base final estuvo conformada por 628 artículos que aplican estadística inferencial procedentes de las descargas en repositorios regionales. La recolección automatizada y el filtro de elegibilidad mediante extracción por IA permitieron recuperar de manera eficiente el corpus, cuya construcción exhaustiva se describió en la Sección~\ref{sec:metodologia}. A la luz del nuevo diseño, las prevalencias y resultados se reportan exclusivamente a nivel de unidad analítica primaria (el artículo).
+
+A nivel general, el 39,0\,\% de los artículos analizados ($n=245$ de 628) incurrió en una \textbf{Falla Fuerte}, definida por la aplicación iterativa de estadística inferencial sobre marcos muestrales de conveniencia sin advertir explícita o discutir dicha limitación durante el reporte de resultados. Un 49,7\,\% adicional ($n=312$) aplicó la misma mecánica inferencial pero adjuntando una declaración de limitante explícita (clasificada metodológicamente como \textit{Debilidad Importante}). Apenas el 11,3\,\% ($n=71$) de la muestra evidenció rigor completo y se ubicó en la categoría de \textit{Sin Falla Relevante}.
+
+Estas métricas ilustran de manera contundente un problema estructural de la literatura empírica auditada: acumulativamente, un 88,7\,\% de los artículos aplica un andamiaje inferencial estadísticamente desanclado de un marco poblacional probabilístico.
+
+La distribución según áreas de encuadramiento expone marcados matices empíricos. Según los indicadores estructurales, las Ciencias de la Educación seguidas de las Ciencias Naturales presentan las mayores prevalencias en la categoría de \textit{Fallas Fuertes} (superiores al 42\,\%). En contrapartida, las Ciencias de la Salud exponen la mayor porción de \textit{Debilidades Importantes} (63,9\,\%), donde la mayoría de los investigadores procede a realizar la generalización estadística no probabilística acompañándola con exenciones discursivas.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig2_distribucion_porcentual_por_area.png}
+\caption{Distribución porcentual de las categorías de falla según macroárea disciplinar. Fuente: Elaboración propia a partir de datos de DOAJ.}
+\label{fig:distribucion_porcentual}
+\end{figure}
+
+El desglose volumétrico de los artículos evaluados puede consultarse en la Tabla~\ref{tab:distribucion_area}.
+
+\begin{table}[H]
+\centering
+\caption{Distribución absoluta y porcentual por categoría y área disciplinar.}
+\label{tab:distribucion_area}
+\begin{tabular}{lrrrrrrr}
+\toprule
+\textbf{Área} & \textbf{FF} & \textbf{DI} & \textbf{SFR} & \textbf{TOTAL} & \textbf{\%FF} & \textbf{\%DI} & \textbf{\%SFR} \\
+\midrule
+Cs. Salud & 47 & 94 & 6 & 147 & 32.0 & 63.9 & 4.1 \\
+Cs. Naturales & 41 & 40 & 15 & 96 & 42.7 & 41.7 & 15.6 \\
+Cs. Agrarias & 36 & 39 & 10 & 85 & 42.4 & 45.9 & 11.8 \\
+Psic./Cs. Soc. & 58 & 76 & 11 & 145 & 40.0 & 52.4 & 7.6 \\
+Ingenieria & 27 & 35 & 12 & 74 & 36.5 & 47.3 & 16.2 \\
+Educacion & 36 & 28 & 17 & 81 & 44.4 & 34.6 & 21.0 \\
+\textbf{TOTAL} & \textbf{245} & \textbf{312} & \textbf{71} & \textbf{628} & \textbf{39.0} & \textbf{49.7} & \textbf{11.3} \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize Fuente: Elaboración propia a partir de datos de DOAJ. Nota: FF = Falla Fuerte; DI = Debilidad Importante; SFR = Sin Falla Relevante. Elaboración estructural sobre $n=628$ artículos.
+\end{flushleft}
+\end{table}
+
+Los artículos auditados cubren el período 2018--2025, lo que refleja la producción científica más reciente del ecosistema regional.
+
+En cuanto a la fase de simulación, la Tabla~\ref{tab:parametros_sim} resume los parámetros fijos del experimento Monte Carlo. Estos valores se utilizaron como referencia de una población finita sintética calibrada y no deben interpretarse como estimaciones sustantivas para una población observada particular.
+
+\begin{table}[H]
+\centering
+\caption{Parámetros de ejecución y parámetros de referencia utilizados en la simulación.}
+\label{tab:parametros_sim}
+\begin{tabular}{lr}
+\toprule
+\textbf{Parámetro} & \textbf{Valor} \\
+\midrule
+Réplicas Monte Carlo ($R$) & 10.000 \\
+Nivel de confianza & 95\,\% \\
+Valor crítico $z$ & 1,95996 \\
+Margen de error para proporción ($d_{prop}$) & 0,05 \\
+Margen de error para media ($d_{\mu}$) & 300.000 Gs \\
+Tamaño poblacional ($N$) & 279.152 \\
+Proporción verdadera ($p$) & 0,524 \\
+Media verdadera ($\mu$) & 7.077.586 Gs \\
+Desvío estándar ($\sigma$) & 5.153.750 Gs \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize Fuente: Elaboración propia.
+\end{flushleft}
+\end{table}
+
+La Tabla~\ref{tab:n_objetivo} muestra los tamaños muestrales requeridos con y sin \CPF. Dado el tamaño poblacional de referencia, la \CPF\ tuvo un efecto marginal.
+
+\begin{table}[H]
+\centering
+\caption{Tamaños muestrales requeridos con y sin corrección por población finita.}
+\label{tab:n_objetivo}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Estimando} & \textbf{$n$ sin \CPF} & \textbf{$n$ con \CPF} \\
+\midrule
+Proporción & 385 & 384 \\
+Media & 1.134 & 1.130 \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize Fuente: Elaboración propia.
+\end{flushleft}
+\end{table}
+
+La Tabla~\ref{tab:sensibilidad_cpf} ilustra el comportamiento de \CPF\ bajo diferentes tamaños poblacionales y valores de $p$. Para proporciones, el tamaño depende de $p(1-p)$, por lo que los escenarios $p=0{,}2$ y $p=0{,}8$ son simétricos.
+
+\begin{table}[H]
+\centering
+\caption{Sensibilidad del tamaño muestral para proporción a $N$ y $p$, con y sin \CPF.}
+\label{tab:sensibilidad_cpf}
+\begin{tabular}{rrrrr}
+\toprule
+\textbf{$N$} & \textbf{$p$} & \textbf{$n$ sin \CPF} & \textbf{$n$ con \CPF} & \textbf{Reducción (\%)} \\
+\midrule
+1.000 & 0,2 & 246 & 198 & 19,5 \\
+10.000 & 0,2 & 246 & 240 & 2,4 \\
+279.152 & 0,2 & 246 & 246 & 0,0 \\
+1.000 & 0,5 & 385 & 278 & 27,8 \\
+10.000 & 0,5 & 385 & 370 & 3,9 \\
+279.152 & 0,5 & 385 & 384 & 0,3 \\
+1.000 & 0,8 & 246 & 198 & 19,5 \\
+10.000 & 0,8 & 246 & 240 & 2,4 \\
+279.152 & 0,8 & 246 & 246 & 0,0 \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize Fuente: Elaboración propia. Nota: Para proporciones, el tamaño muestral depende de $p(1-p)$; por ello, $p=0{,}2$ y $p=0{,}8$ son simétricos.
+\end{flushleft}
+\end{table}
+
+La Tabla~\ref{tab:sim_prob} resume cobertura, sesgo relativo y \RMSE\ bajo \SRS\ y estratificación proporcional. En ambos diseños la cobertura se mantuvo próxima a la nominal, con sesgo bajo y \RMSE\ acotado.
+
+\begin{table}[H]
+\centering
+\caption{Desempeño inferencial bajo diseños probabilísticos.}
+\label{tab:sim_prob}
+\begin{tabular}{lrrr}
+\toprule
+\textbf{Diseño y parámetro} & \textbf{Cobertura (\%)} & \textbf{Sesgo (\%)} & \textbf{\RMSE} \\
+\midrule
+\SRS, proporción & 95 & 0,73 & 0,025 \\
+\SRS, media (Gs) & 93 & -0,31 & 143.848 \\
+Estratificado proporcional, proporción & 95 & -0,42 & 0,024 \\
+Estratificado proporcional, media (Gs) & 96 & -0,12 & 140.326 \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize Fuente: Elaboración propia. Nota: La cobertura se reporta solo para diseños probabilísticos.
+\end{flushleft}
+\end{table}
+
+Bajo conveniencia no se reportó cobertura poblacional, porque el mecanismo de inclusión depende del proceso de selección y rompe la base probabilística que sustenta la interpretación frecuentista del intervalo. En este escenario se reportaron solo sesgo relativo y \RMSE.
+
+\begin{table}[H]
+\centering
+\caption{Desempeño bajo muestreo por conveniencia.}
+\label{tab:sim_conv}
+\begin{tabular}{lrr}
+\toprule
+\textbf{Parámetro} & \textbf{Sesgo (\%)} & \textbf{\RMSE} \\
+\midrule
+Proporción & 2,51 & 0,027 \\
+Media (Gs) & 2,10 & 198.422 \\
+\bottomrule
+\end{tabular}
+\begin{flushleft}
+\footnotesize Fuente: Elaboración propia. Nota: No se reporta cobertura porque el mecanismo de selección por conveniencia impide interpretación poblacional del \IC.
+\end{flushleft}
+\end{table}
+
+La fase diagnóstica mostró una prevalencia sustantiva de fallas inferenciales críticas y un gradiente claro según tipo de muestreo. La fase de simulación confirmó que, cuando el mecanismo de selección es probabilístico, la cobertura se aproxima a la nominal; en cambio, bajo conveniencia se observa sesgo estructural y pérdida de interpretabilidad inferencial.
+
+En conjunto, ambos componentes convergen en un mismo punto: la validez de la inferencia no depende solo del estimador o del software utilizado, sino de la coherencia entre población objetivo, mecanismo de selección, cálculo de tamaño muestral, estimación de varianza e interpretación final.
+
+La Figura~\ref{fig:simulacion_mc} sintetiza visualmente los tres criterios de desempeño evaluados.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig_simulacion_resultados.png}
+\caption{Resultados de la simulación Monte Carlo ($R=10\,000$ réplicas, $N=279\,152$, $n=384$ para proporciones con \CPF).
+\textbf{Panel~A}: distribución muestral del estimador $\hatP$ para los tres diseños;
+las curvas del \SRS\ y del estratificado se superponen sobre el valor verdadero $p=0{,}524$,
+mientras que la conveniencia exhibe desplazamiento sistemático.
+\textbf{Panel~B}: cobertura empírica del \IC\ 95\,\%; la línea discontinua indica el nivel nominal.
+\textbf{Panel~C}: sesgo relativo (\%) y \RMSE\ por diseño; los diseños probabilísticos
+presentan sesgo cercano a cero y \RMSE\ similar, en contraste con la conveniencia. Fuente: Elaboración propia.}
+\label{fig:simulacion_mc}
+\end{figure}

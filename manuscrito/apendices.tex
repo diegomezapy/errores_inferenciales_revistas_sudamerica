@@ -1,0 +1,66 @@
+\appendix
+
+\section{Reglas resumidas de codificación de fallas inferenciales críticas}
+\label{app:codificacion}
+
+\begin{longtable}{P{4.0cm}P{5.1cm}P{5.6cm}}
+\caption{Protocolo resumido de codificación.}
+\label{tab:protocolo_codificacion}\\
+\toprule
+\textbf{Categoría} & \textbf{Evidencia buscada} & \textbf{Regla de codificación} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Categoría} & \textbf{Evidencia buscada} & \textbf{Regla de codificación} \\
+\midrule
+\endhead
+No significancia interpretada como ausencia de efecto & Frases que concluyen ``no hay efecto'', ``no existe asociación'' o equivalentes a partir de un resultado no significativo, sin considerar \IC\ o umbrales de relevancia. & Se codifica falla si la conclusión excede lo permitido por la incertidumbre reportada. \\
+Comparación incorrecta entre grupos & Afirmaciones del tipo ``un grupo fue significativo y el otro no, por lo tanto son diferentes'', sin contraste directo entre estimadores. & Se codifica falla si la comparación entre grupos no se basa en el parámetro de diferencia pertinente. \\
+Poder post-hoc como justificación & Cálculo de poder retrospectivo con el efecto observado para justificar validez o suficiencia de la muestra. & Se codifica falla cuando el poder post-hoc se presenta como validación sustantiva del estudio. \\
+Inferencia en censo completo sin superpoblación & Uso de \pvalue, \IC\ o lenguaje inferencial sobre un censo completo sin definir modelo generador o superpoblación. & Se codifica falla cuando no existe justificación explícita para inferencia más allá de la población observada. \\
+Incoherencia diseño-inferencia & Cálculo o lenguaje inferencial probabilístico aplicado a muestras de conveniencia o selección no probabilística, sin justificación clara. & Se codifica falla cuando los supuestos del análisis son incompatibles con el mecanismo real de selección. \\
+Ausencia de población o marco muestral & El artículo no define población objetivo, unidad de selección o marco muestral. & Se codifica falla cuando la omisión impide evaluar la validez externa del estudio. \\
+Reporte incompleto de pesos o varianza & En diseños complejos, el artículo omite pesos, estratos, conglomerados o método de varianza. & Se codifica falla cuando el lector no puede reconstruir la base del error estándar o del \IC. \\
+\bottomrule
+\end{longtable}
+
+\begin{flushleft}
+\footnotesize Fuente: Elaboración propia.
+\end{flushleft}
+
+\section{Detalle conceptual del escenario de conveniencia modelado}
+\label{app:conveniencia_modelada}
+
+El mecanismo de conveniencia utilizado en la simulación se definió como un proceso de inclusión no probabilística dependiente de características asociadas con la variable de interés. Su propósito fue representar un escenario plausible de captación dirigida y no un inventario exhaustivo de todas las formas de selección no probabilística.
+
+Las implicancias de este diseño son directas: la probabilidad de inclusión deja de ser conocida y distinta de cero para todas las unidades; el sesgo de selección afecta el centro de la distribución muestral, no solo su dispersión; un \IC\ construido bajo supuestos probabilísticos pierde interpretación de cobertura poblacional; y el bootstrap puede describir variabilidad interna de la muestra observada, pero no restaurar la propiedad de aleatorización ausente en el diseño original.
+
+\section{Checklist mínimo para evaluación editorial}
+\label{app:checklist}
+
+\begin{longtable}{P{2.1cm}P{3.3cm}P{6.0cm}P{4.1cm}}
+\caption{Checklist mínimo para evaluación editorial de coherencia inferencial.}
+\label{tab:checklist}\\
+\toprule
+\textbf{Prioridad} & \textbf{Ítem mínimo} & \textbf{Qué debe reportarse} & \textbf{Motivo} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Prioridad} & \textbf{Ítem mínimo} & \textbf{Qué debe reportarse} & \textbf{Motivo} \\
+\midrule
+\endhead
+Obligatorio & Población y marco & Población objetivo, unidad de análisis, unidad de selección y marco muestral o listado de referencia. & Delimita el alcance de la validez externa. \\
+Obligatorio & Mecanismo de selección & Si la selección fue probabilística o no probabilística, reglas de inclusión, estratos, conglomerados y etapas de muestreo. & Permite juzgar sesgo de selección e interpretabilidad inferencial. \\
+Obligatorio & Tamaño muestral & Justificación del tamaño muestral con nivel de confianza, margen de error, supuestos de variabilidad y, cuando corresponda, \CPF\ y efecto de diseño. & Conecta precisión esperada con diseño y análisis. \\
+Obligatorio & Estimador y varianza & Estimador principal, método de error estándar o varianza, uso de pesos y tratamiento de conglomerados o estratos. & Evita \IC\ o pruebas incompatibles con el diseño real. \\
+Obligatorio & Criterios de exclusión y no respuesta & Exclusiones, pérdidas, no respuesta y tratamiento analítico de esos casos. & Mejora trazabilidad y reduce sesgos no documentados. \\
+Deseable & Subgrupos y multiplicidad & Si los análisis por subgrupos son exploratorios o planificados, y cómo se interpreta su incertidumbre. & Reduce sobrelectura de resultados comparativos. \\
+Obligatorio & Datos censales & Si se analizó un censo o la totalidad del marco, aclarar si existe superpoblación o si el análisis es puramente descriptivo. & Evita inferencia injustificada sobre poblaciones completamente observadas. \\
+Obligatorio & Interpretación & Discusión basada en magnitud y precisión, no solo en significancia. Debe evitarse interpretar no significancia como ausencia de efecto. & Mejora la calidad de la conclusión sustantiva. \\
+Deseable & Remuestreo & Aclarar el objetivo del bootstrap u otros remuestreos y evitar presentarlos como sustitutos de la aleatorización. & Previene interpretaciones erróneas de cobertura poblacional. \\
+\bottomrule
+\end{longtable}
+
+\begin{flushleft}
+\footnotesize Fuente: Elaboración propia.
+\end{flushleft}

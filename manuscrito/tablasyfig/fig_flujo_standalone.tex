@@ -1,0 +1,54 @@
+\documentclass[border=4pt]{standalone}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc,fit,backgrounds}
+\usepackage{amsmath}
+
+\begin{document}
+\begin{tikzpicture}[
+  font=\small,
+  node distance=6mm,
+  box/.style={draw, rounded corners=2mm, align=left, text width=12cm, inner sep=6pt},
+  arrow/.style={-Latex, thick}
+]
+
+\node[box] (s1) {%
+\textbf{(1) Universo y marco editorial}\\
+Revistas sudamericanas de acceso abierto, indexadas, elegibles según criterios editoriales.
+};
+
+\node[box, below=of s1] (s2) {%
+\textbf{(2) Selección de revistas (1ra etapa)}\\
+Muestreo probabilístico de $J$ revistas desde $J_0$.
+};
+
+\node[box, below=of s2] (s3) {%
+\textbf{(3) Ventana temporal y listado de candidatos}\\
+Último volumen disponible 2024, si no existe 2024 se usa 2023. Enumeración de artículos del volumen auditado.
+};
+
+\node[box, below=of s3] (s4) {%
+\textbf{(4) Acceso a texto completo y elegibilidad}\\
+Descarga PDF, verificación, filtrado por cuantitativo o mixto con inferencia, exclusiones y duplicados.
+};
+
+\node[box, below=of s4] (s5) {%
+\textbf{(5) Extracción y codificación metodológica}\\
+Variables de diseño y reporte, e indicador $y_{ij}$ de falla crítica inferencial (protocolo auditado).
+};
+
+\node[box, below=of s5] (s6) {%
+\textbf{(6) Control de calidad y base final}\\
+Doble codificación (submuestra), Kappa, resolución de discrepancias, consolidación ($n=319$, $J=50$).
+};
+
+\draw[arrow] (s1) -- (s2);
+\draw[arrow] (s2) -- (s3);
+\draw[arrow] (s3) -- (s4);
+\draw[arrow] (s4) -- (s5);
+\draw[arrow] (s5) -- (s6);
+
+\end{tikzpicture}
+\end{document}

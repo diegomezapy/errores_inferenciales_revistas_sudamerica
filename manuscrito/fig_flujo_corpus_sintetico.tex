@@ -1,0 +1,86 @@
+% Diagrama metodológico de construcción del corpus analítico
+% \input{fig_flujo_corpus_sintetico}
+\resizebox{\linewidth}{!}{%
+\begin{tikzpicture}[
+  font=\footnotesize,
+  node distance=5mm and 8mm,
+  box/.style  ={draw, rounded corners=2mm, align=left,
+                text width=0.60\linewidth, inner sep=5pt},
+  sbox/.style ={draw, rounded corners=2mm, align=left,
+                text width=0.28\linewidth, inner sep=5pt},
+  arrow/.style={-Latex, thick},
+  phase/.style ={draw, rounded corners=3mm, inner sep=6pt,
+                 dashed, gray},
+  phaselabel/.style={font=\bfseries\footnotesize, anchor=south west, inner sep=1pt}
+]
+
+% ── Columna principal ─────────────────────────────────────
+\node[box] (p1) {%
+  \textbf{(1) Universo y marco editorial}\\
+  Revistas sudamericanas de acceso abierto indizadas en DOAJ
+  con enfoque cuantitativo empírico (vía códigos LCC).
+};
+\node[box, below=of p1] (p2) {%
+  \textbf{(2) Recolección automatizada}\\
+  Consulta a la API de DOAJ para recuperar y descargar los metadatos de los últimos documentos comprendidos entre 2018 y el presente.
+};
+\node[box, below=of p2] (p3) {%
+  \textbf{(3) Extracción de hipervínculos}\\
+  Descarga masiva de archivos PDF originales mediante metaetiquetas de repositorios institucionales cerrados y directos.
+};
+\node[box, below=12mm of p3] (p4) {%
+  \textbf{(4) Transformación de Documentos}\\
+  Traducción óptica y extracción en texto plano de cada PDF empíricamente auditable utilizado de la librería \texttt{pdfplumber}.
+};
+\node[box, below=of p4] (p5) {%
+  \textbf{(5) Auditoría Asistida por IA}\\
+  Procesamiento del corpus mediante Gemini 2.5 Flash con validación JSON (Pydantic). Extracción estructurada de variables predefinidas.
+};
+\node[box, below=12mm of p5] (p6) {%
+  \textbf{(6) Validaciones de Exclusión}\\
+  Filtro y descarte de artículos teóricos, revisiones bibliográficas o estudios cualitativos puros que no contengan una estructura medible.
+};
+\node[box, below=of p6] (p7) {%
+  \textbf{(7) Clasificación Analítica}\\
+  Codificación empírica sobre los artículos: \textit{Falla Fuerte, Debilidad Importante o Sin Falla Relevante}.
+};
+\node[box, below=of p7] (p8) {%
+  \textbf{(8) Base analítica final}\\
+  $\boldsymbol{628}$ artículos únicos cuantitativos con estadística inferencial estructurados dentro del dataset global.
+};
+
+% ── Panel lateral: conteos ────────────────────────────────
+\node[sbox, right=10mm of p4, anchor=north west] (c1) {%
+  \textbf{Pipeline del Corpus}\\[2pt]
+  Volumen PDF iniciales: $2\,191$\\
+  Exclusión por ausencia de inferencia o revisión empírica: $-1\,563$\\[4pt]
+  \textbf{Final: $628$ art.}
+};
+
+\node[sbox, right=10mm of p6, anchor=north west] (c2) {%
+  \textbf{Distribución de Fallas}\\[2pt]
+  Falla Fuerte: $245$ ($39,0\,\%$)\\
+  Debilidad Importante: $312$ ($49,7\,\%$)\\
+  Sin Falla Relevante: $71$ ($11,3\,\%$)
+};
+
+% ── Flechas ───────────────────────────────────────────────
+\draw[arrow] (p1)--(p2); \draw[arrow] (p2)--(p3);
+\draw[arrow] (p3)--(p4); \draw[arrow] (p4)--(p5);
+\draw[arrow] (p5)--(p6); \draw[arrow] (p6)--(p7);
+\draw[arrow] (p7)--(p8); 
+\draw[arrow] (p4.east) -- ++(5mm,0) |- (c1.west);
+\draw[arrow] (p7.east) -- ++(5mm,0) |- (c2.west);
+
+% ── Cajas de fase ─────────────────────────────────────────
+\begin{pgfonlayer}{background}
+  \node[phase, fit=(p1)(p3),
+        label={[phaselabel]north west:Fase I — Descubrimiento}] {};
+  \node[phase, fit=(p4)(p5),
+        label={[phaselabel]north west:Fase II — Codificación por IA}] {};
+  \node[phase, fit=(p6)(p8),
+        label={[phaselabel]north west:Fase III — Depuración}] {};
+\end{pgfonlayer}
+
+\end{tikzpicture}%
+}% fin \resizebox

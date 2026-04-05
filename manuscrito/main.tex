@@ -1,0 +1,188 @@
+\documentclass[11pt,twoside]{article}
+
+% ============================================================
+% Estilo de composición, aproximación a DADOS
+% ============================================================
+
+% --- Idiomas ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese,english,spanish]{babel}
+
+% --- Tipografía ---
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+\usepackage{microtype}
+
+% --- Geometría ---
+\usepackage[a4paper,margin=2.6cm]{geometry}
+
+% --- Párrafos ---
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{7pt}
+\raggedbottom
+
+% --- Gráficos y tablas ---
+\usepackage{graphicx}
+\graphicspath{{tablasyfig/}}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{ragged2e}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{caption}
+\usepackage{subcaption}
+\newcolumntype{P}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+% --- Listas (uso restringido, evitar en intro y discusión) ---
+\usepackage{enumitem}
+\setlist{leftmargin=*}
+
+% --- Números (coma decimal) ---
+\usepackage[output-decimal-marker={,}]{siunitx}
+\sisetup{output-decimal-marker={,}, group-separator={.}, group-minimum-digits=4}
+
+% --- TikZ (solo si se usa el diagrama de flujo) ---
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+
+% --- Hipervínculos ---
+\usepackage[hidelinks]{hyperref}
+
+% --- Citas ---
+\usepackage[round,authoryear]{natbib}
+
+% --- Encabezados y pie (estilo DADOS aproximado) ---
+\usepackage{lastpage}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\newcommand{\RunningTitle}{Errores inferenciales críticos en estudios cuantitativos sudamericanos}
+\newcommand{\RunningAuthors}{Autores omitidos para evaluación ciega}
+\fancyhead[CE]{\small \RunningTitle}
+\fancyhead[LO]{\small \RunningAuthors}
+\fancyfoot[C]{\small \thepage/\pageref*{LastPage}}
+
+% --- No numeración de secciones (DADOS suele publicar sin numeración) ---
+\setcounter{secnumdepth}{0}
+
+% --- Macros ---
+\newcounter{definicion}
+\newenvironment{definicion}[1][]{\refstepcounter{definicion}\par\medskip\noindent\textbf{Definición~\thedefinicion\if\relax\detokenize{#1}\relax\else\ (#1)\fi.}\itshape}{\par\medskip}
+\newcommand{\pvalue}{\ensuremath{p}}
+\newcommand{\IC}{\ensuremath{\text{IC}}}
+\newcommand{\Hnull}{\ensuremath{\mathrm{H}_0}}
+\newcommand{\hatP}{\ensuremath{\widehat{P}}}
+\newcommand{\SRS}{\ensuremath{\mathrm{MAS\mbox{-}SR}}}
+\newcommand{\CPF}{\ensuremath{\mathrm{CPF}}}
+\newcommand{\MSE}{\ensuremath{\mathrm{MSE}}}
+\newcommand{\RMSE}{\ensuremath{\mathrm{RMSE}}}
+\newcommand{\sesgorel}{\ensuremath{\mathrm{SesgoRel}}}
+
+% ============================================================
+% Metadatos (edite según corresponda)
+% ============================================================
+\newcommand{\ArticuloTipo}{Artigos Originais}
+\newcommand{\TituloPT}{Erros Inferenciais Críticos em Estudos Quantitativos Sul-Americanos}
+\newcommand{\TituloEN}{Critical Inferential Errors in South American Quantitative Studies}
+\newcommand{\TituloFR}{Erreurs Inférentielles Critiques dans les Études Quantitatives Sud-Américaines}
+\newcommand{\TituloES}{Errores Inferenciales Críticos en Estudios Cuantitativos Sudamericanos}
+
+\title{\TituloES}
+\author{Diego Bernardo Meza Bogado}
+\date{}
+
+% ============================================================
+% Bloque de resumen multilíngüe (estilo DADOS)
+% ============================================================
+\newcommand{\AbsBlock}[4]{%
+  \section*{#1}%
+  {\bfseries\large #2\par}%
+  #3\par
+  \vspace{4pt}%
+  {\bfseries #4}%
+  \vspace{8pt}%
+}
+
+% ============================================================
+\begin{document}
+
+% ===========================
+% Primera página, metadatos
+% ===========================
+\thispagestyle{fancy}
+
+{\Large\bfseries DADOS\par}
+{\small dados.iesp.uerj.br\par}
+
+\vspace{12pt}
+{\small [\ArticuloTipo]\par}
+
+\vspace{10pt}
+{\LARGE\bfseries \TituloES*\par}
+
+\vspace{10pt}
+{\small \textbf{[Autor/a omitido/a para evaluación ciega]}\par}
+{\footnotesize [Afiliación omitida para evaluación ciega]\par}
+
+\vspace{6pt}
+{\small \textbf{DOI:} (a ser atribuído)\par}
+{\small \textbf{Base de datos:} \href{https://doi.org/10.7910/DVN/XXXXXX}{https://doi.org/10.7910/DVN/XXXXXX}\par}
+
+\begingroup
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\footnotetext[1]{%
+Nota: reemplace el enlace de Base de datos por un identificador persistente (por ejemplo Harvard Dataverse o Zenodo) que incluya al menos, la base consolidada de 628 artículos y, idealmente, los scripts de extracción y simulación. Los agradecimientos y financiamiento, si aplica, deben declararse aquí.%
+}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\endgroup
+
+\newpage
+
+% ===========================
+% Resumen en cuatro idiomas
+% Orden: PT, EN, FR, ES
+% ===========================
+
+\selectlanguage{portuguese}
+\AbsBlock{Resumo}{\TituloPT}{%
+O artigo estima a prevalência de falhas inferenciais críticas — denominadas Falhas Fortes — em estudos quantitativos publicados em revistas sul-americanas de acesso aberto. Por meio de uma auditoria documental assistida por inteligência artificial (Gemini 2.5 Flash) sobre uma base de 628 artigos, verificou-se que 39,0\% (245/628) incorrem nessa falha: realizam extrapolações populacionais a partir de amostras não probabilísticas sem qualquer advertência metodológica. Um contingente adicional apresenta o mesmo problema com reconhecimento explícito de limitação. A simulação de Monte Carlo confirma que a seleção por conveniência induz vieses de magnitudes irrecuperáveis, enquanto os desenhos probabilísticos mantêm cobertura nominal. O estudo conclui propondo diretrizes editoriais focadas na coerência entre desenho amostral, análise e interpretação, como instrumento mínimo para mitigar a crise de reprodutibilidade regional.%
+}{\textbf{Palavras-chave:} pesquisa quantitativa; inferência estatística; erros metodológicos; simulação de Monte Carlo; revistas sul-americanas.}
+
+\selectlanguage{english}
+\AbsBlock{Abstract}{\TituloEN}{%
+This article estimates the prevalence of critical inferential errors — termed Strong Flaws — in quantitative studies published in South American open-access journals. Using an AI-assisted documentary audit (Gemini 2.5 Flash) on a corpus of 628 articles, we find that 39.0\% (245/628) commit this error: they perform population-level extrapolations from non-probabilistic samples without any methodological disclaimer. An additional group reproduces the same pattern but includes an explicit limitation acknowledgement. A Monte Carlo simulation confirms that convenience selection induces irreversible biases, while probabilistic designs maintain nominal coverage. The study concludes by proposing editorial guidelines centered on design-inference coherence as a minimum instrument to address the regional reproducibility crisis.%
+}{\textbf{Keywords:} quantitative research; statistical inference; methodological errors; Monte Carlo simulation; South American journals.}
+
+\AbsBlock{Résumé}{\TituloFR}{%
+L'article analyse la prévalence des erreurs inférentielles critiques dans les études quantitatives publiées dans des revues sud-américaines en libre accès et évalue leur impact sur la validité statistique. \`A cette fin, une double stratégie est utilisée~: un audit documentaire assisté par intelligence artificielle sur une base de 628 articles, et une simulation de Monte Carlo pour quantifier l'effet de l'application de statistiques inférentielles sur des échantillons non probabilistes. Les principaux résultats fournissent des preuves solides que pr\`es de 90\,\% de l'écosyst\`eme inférentiel repose sur des plans d'échantillonnage non viables. Plus précisément, 39,0\,\% commettent des failles majeures en effectuant des extrapolations de population sur des échantillons de convenance sans avertissements méthodologiques. La simulation confirme que la sélection de convenance induit des biais irréversibles. L'étude conclut en proposant des lignes directrices éditoriales axées sur la cohérence entre la conception, l'analyse et l'interprétation pour atténuer la crise de reproductibilité.%
+}{\textbf{Mots-clés:} recherche quantitative; inférence statistique; erreurs méthodologiques; simulation de Monte Carlo; revues sud-américaines.}
+
+\selectlanguage{spanish}
+\AbsBlock{Resumen}{\TituloES}{%
+Este artículo estima la prevalencia de fallas inferenciales críticas —denominadas Fallas Fuertes— en estudios cuantitativos publicados en revistas sudamericanas de acceso abierto. Mediante una auditoría documental asistida por inteligencia artificial (Gemini 2.5 Flash) sobre un corpus de 628 artículos, se constata que el 39,0\% (245/628) incurre en esta falla: realizan extrapolaciones poblacionales sobre muestras no probabilísticas sin advertencia metodológica alguna. Un contingente adicional reproduce el mismo patrón con reconocimiento explícito de limitación. La simulación Monte Carlo confirma que la selección por conveniencia induce sesgos de magnitudes no enmendables, mientras los diseños probabilísticos mantienen la cobertura nominal. El estudio concluye proponiendo lineamientos editoriales centrados en la coherencia diseño-inferencia como instrumento mínimo para mitigar la crisis de reproducibilidad regional.%
+}{\textbf{Palabras-clave:} investigación cuantitativa; inferencia estadística; errores metodológicos; simulación de Monte Carlo; revistas sudamericanas.}
+
+\selectlanguage{spanish}
+
+% ===========================
+% Texto principal
+% ===========================
+\input{introduccion}
+\input{marcoteorico}
+\input{metodologia}
+\input{resultados}
+\input{consideraciones}
+
+% Apéndice (opcional)
+\input{apendices}
+
+\newpage
+\FloatBarrier
+\section*{Referencias}
+
+\input{referencias_dados}
+
+\end{document}

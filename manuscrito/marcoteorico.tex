@@ -1,0 +1,24 @@
+\section{Errores conceptuales clave en la inferencia cuantitativa}
+\label{sec:marcoteorico}
+
+Esta sección resume los errores conceptuales que motivan la auditoría documental. Su función no es ofrecer un manual general de estadística, sino establecer el marco teórico que sustenta la definición operacional de las fallas auditadas y el protocolo de codificación utilizado en la fase diagnóstica.
+
+Un primer error recurrente consiste en interpretar un resultado no significativo como demostración de ausencia de efecto. Sin embargo, un \pvalue\ grande solo indica compatibilidad de los datos con \Hnull\ bajo el modelo asumido; no demuestra igualdad exacta ni ausencia de relevancia práctica \citep{altman1995,schmidt2025}. La evaluación correcta requiere atender el intervalo de incertidumbre y si este permite excluir efectos de magnitud sustantiva.
+
+Un segundo error frecuente es confundir significancia estadística con importancia práctica. La significancia estadística depende de la magnitud del efecto, la variabilidad y el tamaño muestral. Un efecto trivial puede producir un \pvalue\ pequeño si la muestra es grande, mientras que un efecto importante puede no alcanzar significancia si la precisión es insuficiente \citep{darrigo2024,mansournia2021}. Por ello, la interpretación debe centrarse en magnitud, dirección y precisión.
+
+En tercer lugar, concluir que dos grupos difieren porque uno presenta resultado significativo y el otro no constituye una comparación incorrecta. La comparación válida requiere contrastar directamente los estimadores o el parámetro de interés entre grupos \citep{gelman2006}. Esta confusión produce afirmaciones espurias sobre heterogeneidad o efecto diferencial.
+
+Finalmente, el poder post-hoc calculado a partir del efecto observado aporta poca información adicional y suele ser una reexpresión del \pvalue\ \citep{hoenig2001,thomas1997,reinhart2015}. De manera similar, en un censo completo no corresponde aplicar inferencia poblacional clásica salvo que se explicite una superpoblación o un mecanismo estocástico externo que justifique la generalización \citep{navarrete2019}.
+
+A partir de estos errores recurrentes, el protocolo de auditoría se sustenta en dos definiciones operativas centrales.
+
+\begin{definicion}[Falla inferencial crítica]
+Se define como falla inferencial crítica cualquier omisión, incoherencia o práctica analítica que invalide la generalización a la población objetivo o induzca una interpretación incorrecta del efecto estimado.
+\end{definicion}
+
+\begin{definicion}[Coherencia diseño-cálculo-ejecución]
+Se denomina coherencia diseño-cálculo-ejecución al alineamiento entre los supuestos del cálculo de tamaño muestral, el diseño declarado, el mecanismo real de selección, el estimador aplicado y el método de varianza utilizado en el análisis.
+\end{definicion}
+
+Las categorías auditadas y la evidencia buscada se detallan de forma resumida en el Apéndice~\ref{app:codificacion}. Esta decisión evita sobrecargar el texto principal y mejora la trazabilidad del protocolo de auditoría.

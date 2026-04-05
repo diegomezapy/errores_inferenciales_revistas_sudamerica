@@ -1,0 +1,21 @@
+# LaTeX auxiliaries
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.toc
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.xdv
+
+# macOS
+.DS_Store
+*.swp
+
+# tectonic binary
+tectonic
+
+# Compiled PDF (regenerable)
+# main.pdf

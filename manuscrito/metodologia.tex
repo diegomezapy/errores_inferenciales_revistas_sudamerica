@@ -1,0 +1,61 @@
+\section{Datos y métodos}
+\label{sec:metodologia}
+
+El estudio integra dos componentes complementarios: una fase diagnóstica de auditoría documental, orientada a estimar la prevalencia de fallas inferenciales críticas en artículos cuantitativos publicados en revistas sudamericanas de acceso abierto, y una fase de simulación Monte Carlo con población finita conocida, diseñada para evaluar sesgo, \RMSE\ y cobertura empírica bajo diseños probabilísticos frente a selección por conveniencia. La Figura~\ref{fig:flujo_corpus} sintetiza el proceso completo de construcción del corpus analítico.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{fig_flujo_standalone.pdf}
+\caption{Mapa de síntesis de los procesos metodológicos: construcción del corpus analítico desde el universo DOAJ hasta la base final de 628 artículos. Fuente: Elaboración propia.}
+\label{fig:flujo_corpus}
+\end{figure}
+
+\subsection{Fase diagnóstica}
+
+El universo objetivo estuvo conformado por revistas sudamericanas de acceso abierto indizadas en el \textit{Directory of Open Access Journals} (DOAJ). Se seleccionaron las revistas con sede editorial en los países de América del Sur, obteniendo un universo operativo inicial. Solo se incluyeron revistas que publican investigaciones con enfoque cuantitativo inferencial o experimental, identificadas mediante los códigos temáticos \textit{Library of Congress Classification} (LCC).
+
+La unidad de análisis estructurante inicial fue la \textbf{revista}, mientras que la unidad analítica final fue el \textbf{artículo}. Se consideraron elegibles artículos originales con metodología cuantitativa o mixta que utilizaran herramientas inferenciales (por ejemplo, pruebas de hipótesis, \IC, modelos de regresión u otros procedimientos estadísticos) procedentes del catálogo de dichas revistas.
+
+Se aplicó un muestreo estratificado proporcional multietápico. En la primera etapa se seleccionaron revistas de forma aleatoria. En la segunda etapa, mediante la consulta automatizada a la API pública de DOAJ (\texttt{/api/search/articles/issn:\{issn\}}), se extrajeron los artículos más recientes de cada publicación seleccionada, priorizando desde el año 2018 al presente, hasta un tope preestablecido por revista. Los archivos en formato PDF de los artículos se recolectaron automáticamente mediante estrategias de descarga (metaetiquetas de OJS, enlaces directos en SciELO o Redalyc). En el último ciclo de expansión, se conformó una muestra final analizable de 2\,191 artículos, de los cuales 628 utilizaron efectivamente estadística inferencial y constituyeron la base analítica.
+
+El texto de cada PDF fue extraído mediante la biblioteca \texttt{pdfplumber} y analizado con el motor \textit{Gemini 2.5 Flash} (Google DeepMind). Para ello se construyó un canal de extracción automatizada con validación formal JSON mediante el estándar Pydantic. Las variables estructuradas recuperadas por el modelo incluyeron disciplina, tipo de estudio, justificación de diseño, tamaño muestral y tipo de muestreo declarado, uso efectivo de inferencia, extrapolación a la población y el reporte de advertencias sobre limitaciones.
+
+La variable resultado principal fue el indicador de falla inferencial estricta. Históricamente analizado de manera binaria, el diseño actual lo estratificó en tres categorías para ofrecer mayor sensibilidad diagnóstica. El evento de interés analizado empíricamente corresponde a la categoría de \textbf{Falla fuerte}, definida cuando se cumplen simultáneamente tres condiciones: el artículo aplica estadística inferencial (pruebas de hipótesis, \pvalue, regresión) o extrapola resultados a la población; la muestra documentada es de carácter no probabilístico (conveniencia, bola de nieve, intencional); y el artículo omite reportar y advertir explícitamente esta limitación originaria.
+
+Otras clasificaciones producidas incluyen las \textit{Debilidades importantes} (inferencia sobre muestras no probabilísticas pero con un descargo o advertencia autoral visible) y los casos \textit{Sin falla relevante} (inferencia aplicada rigurosamente bajo esquemas probabilísticos consistentes). En este estudio, la tasa de prevalencia reportada se centró exclusivamente en documentar la Falla Fuerte como un incumplimiento rotundo a nivel de artículo individual. Se omite explícitamente la derivación de estimadores de prevalencia a nivel de revista. Esto se fundamenta en la naturaleza heterogénea de muchas publicaciones multidisciplinarias, donde coexisten artículos con legítimo alcance descriptivo y cualitativo junto con aquellos que aplican inferencia de manera problemática, haciendo geométricamente ambiguo el clasificar toda una revista bajo una única categorización dicotómica.
+
+A nivel artículo, el estimando objetivo fue la prevalencia poblacional de artículos cuantitativos que cometen una \textit{Falla fuerte}:
+\[
+P_A=\frac{1}{N_A}\sum_{i=1}^{N_A} y_{i},
+\]
+donde $y_{i} \in \{0,1\}$ indica la existencia de Falla Fuerte en el artículo $i$, y $N_A$ la muestra de artículos que aplican inferencia estadística. Las prevalencias empíricas fueron analizadas mediante estratos por macroárea disciplinar y país de origen, contrastando la independencia de distribuciones a través de pruebas paramétricas como $\chi^2$.
+
+La planificación por precisión mantuvo el marco de \textit{accuracy in parameter estimation} (AIPE) como criterio fundacional de planificación poblacional \citep{noordzij2010}. Para proporciones inferenciales simuladas:
+\[
+n_0=\frac{z_{1-\alpha/2}^2 p(1-p)}{d^2}, \qquad n=\frac{n_0}{1+\frac{n_0-1}{N}}.
+\]
+Con base en una precisión objetivo de $\pm 5$\,puntos porcentuales y un escenario conservador ($p=0{,}5$), la recomendación empírica fue de aproximadamente 385 a $400$ unidades. La expansión final a $n=628$ artículos cuantitativos evaluables provee certidumbre suficiente para estabilizar los intervalos de confianza en el análisis descriptivo transversal.
+
+\subsection{Fase de simulación}
+
+La simulación se construyó sobre una población finita de referencia de tamaño $N=279.152$. Los parámetros verdaderos fijados para el experimento fueron una proporción $p=0{,}524$, una media $\mu=7.077.586$~Gs y un desvío estándar $\sigma=5.153.750$~Gs. Estos valores fueron calibrados para una población sintética verosímil con el perfil sociodemográfico y distributivo de referencia presentado en la Tabla~\ref{tab:parametros_sim}, y se utilizaron únicamente como referencia computacional para evaluar desempeño inferencial; no corresponden a una población observada específica. Se fijaron además $R=10.000$ réplicas Monte Carlo, nivel de confianza de 95\,\%, valor crítico $z=1{,}95996$, margen de error objetivo $d_{prop}=0{,}05$ para proporciones y $d_{\mu}=300.000$~Gs para medias.
+
+Se compararon tres mecanismos de selección: la selección aleatoria simple sin reposición (\SRS); el estratificado proporcional, con asignación por estratos en proporción a su tamaño poblacional; y la conveniencia, modelada como un mecanismo no probabilístico mediante selección endógena dependiente de características asociadas con la variable de interés. La regla de conveniencia se definió explícitamente para que la inclusión no fuera independiente del resultado, reproduciendo un escenario plausible de sesgo de selección. Precisamente por esa razón, la cobertura poblacional de los intervalos bajo conveniencia no se interpretó como una métrica válida.
+
+Para cada réplica $r$, se calcularon estimadores de proporción y media. El desempeño se resumió mediante sesgo relativo, \RMSE\ y cobertura empírica en los diseños probabilísticos:
+\[
+\widehat{\mathrm{Bias}}(\widehat{\theta})=\frac{1}{R}\sum_{r=1}^{R}\widehat{\theta}^{(r)}-\theta,
+\]
+\[
+\sesgorel(\widehat{\theta})=
+100\cdot\frac{\widehat{\mathrm{Bias}}(\widehat{\theta})}{\theta},
+\qquad
+\RMSE(\widehat{\theta})=
+\sqrt{\frac{1}{R}\sum_{r=1}^{R}\left(\widehat{\theta}^{(r)}-\theta\right)^2}.
+\]
+La cobertura se definió como
+\[
+\widehat{\mathrm{Cov}}=\frac{1}{R}\sum_{r=1}^{R}\mathbb{I}\left(\theta\in \IC^{(r)}\right).
+\]
+
+El bootstrap se utilizó solo como diagnóstico numérico de variabilidad condicional a la muestra. En ningún caso se interpretó como mecanismo capaz de restaurar validez inferencial poblacional cuando la muestra madre fue obtenida por conveniencia. Los intervalos bootstrap se reportan, por tanto, exclusivamente como medida de estabilidad interna y no como cobertura poblacional \citep{noordzij2010,reinhart2015}.
