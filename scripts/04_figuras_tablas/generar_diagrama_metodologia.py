@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import os
+import sys
 
 # Configuración de fuente y tamaño
 plt.rcParams['font.family'] = 'sans-serif'
@@ -64,22 +65,22 @@ x_aud = 3
 x_sim = 8.5
 y_start = 8
 
-# Textos Auditoría
+# Textos Auditoría — NÚMEROS ACTUALIZADOS
 aud_texts = [
-    "1. Universo Editorial\nRevistas sudamericanas indexadas\nen acceso abierto",
-    "2. Selección (Etapa 1)\nMuestreo probabilístico de J=50 revistas",
-    "3. Selección (Etapa 2)\nÚltimo volumen publicado (2023-2024)",
-    "4. Depuración y Elegibilidad\nFiltro cuantitativo, texto completo (n=319)",
-    "5. Codificación Metodológica\nAuditoría doble ciego de fallas críticas",
-    "6. Estimación Ponderada\nPrevalencia de fallas con estimador Hájek"
+    "1. Universo Editorial\nRevistas sudamericanas de acceso abierto\nindexadas en DOAJ (códigos LCC)",
+    "2. Selección Multietápica\nMuestreo estratificado proporcional\nde revistas y artículos (2018–2025)",
+    "3. Recolección Automatizada\nConsulta API DOAJ + descarga masiva\nde PDFs (n = 2.191 artículos)",
+    "4. Extracción por IA\nGemini 2.5 Flash + validación JSON\n(pdfplumber + Pydantic)",
+    "5. Depuración y Elegibilidad\nExclusión de artículos sin inferencia\n(–1.563 artículos excluidos)",
+    "6. Clasificación Analítica Final\nFalla Fuerte / Debilidad Importante /\nSin Falla (n = 628 artículos)"
 ]
 
 # Textos Simulación
 sim_texts = [
-    "1. Población Finita Conocida\nN=279.152, parámetros fijos (\u03bc, p)",
+    "1. Población Finita Conocida\nN = 279.152, parámetros fijos (μ, p)",
     "2. Planificación por Precisión\nTamaños muestrales vía AIPE y CPF",
-    "3. Diseño de Muestreo en Silico\nProbabilístico (MAS, Estratificado) vs.\nNo Probabilístico (Conveniencia)",
-    "4. Replicación (R=10.000)\nEvaluación de Cobertura, Sesgo y MSE"
+    "3. Diseño de Muestreo in Silico\nProbabilístico (MAS-SR, Estratificado)\nvs. No Probabilístico (Conveniencia)",
+    "4. Replicación (R = 10.000)\nCobertura, Sesgo Relativo y RMSE"
 ]
 
 # Títulos de columnas
@@ -123,9 +124,12 @@ draw_arrow(x_sim, y_last_sim - box_h/2, (x_aud + x_sim)/2 + 0.5, y_final + box_h
 ax.set_xlim(0, 11.5)
 ax.set_ylim(y_final - 1, y_start + 1.5)
 
-output_path = r'G:\Mi unidad\DECENA_FACEN\03_TESIS\articulo_fallas_metodologicas\manuscrito\ARTICULO\tablasyfig\figura_metodologia_dual'
-plt.tight_layout()
-plt.savefig(f'{output_path}.pdf', format='pdf', bbox_inches='tight', dpi=300)
-plt.savefig(f'{output_path}.png', format='png', bbox_inches='tight', dpi=300)
+# Output path from command line argument or default
+if len(sys.argv) > 1:
+    output_path = sys.argv[1]
+else:
+    output_path = 'figura_metodologia_dual'
 
-print(f"Generado exitosamente:\n- {output_path}.pdf\n- {output_path}.png")
+plt.tight_layout()
+plt.savefig(f'{output_path}.png', format='png', bbox_inches='tight', dpi=300)
+print(f"Generado exitosamente: {output_path}.png")
